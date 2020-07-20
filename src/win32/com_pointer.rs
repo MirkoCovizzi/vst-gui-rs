@@ -1,9 +1,9 @@
 use std::ptr::null_mut;
 
-use winapi::Interface;
-use winapi::shared::winerror::S_OK;
 use winapi::shared::minwindef::LPVOID;
+use winapi::shared::winerror::S_OK;
 use winapi::um::unknwnbase::IUnknown;
+use winapi::Interface;
 
 pub struct ComPointer<T: Interface> {
     pointer: *mut T,
@@ -17,9 +17,7 @@ impl<T: Interface> ComPointer<T> {
     }
 
     pub fn from_raw(pointer: *mut T) -> Self {
-        ComPointer {
-            pointer: pointer,
-        }
+        ComPointer { pointer: pointer }
     }
 
     // Note: this method doesn't modify the reference counter
@@ -34,9 +32,7 @@ impl<T: Interface> ComPointer<T> {
 
     pub fn get(&self) -> Option<&T> {
         if self.pointer != null_mut() {
-            unsafe {
-                Some(&*self.pointer)
-            }
+            unsafe { Some(&*self.pointer) }
         } else {
             None
         }
@@ -47,12 +43,10 @@ impl<T: Interface> ComPointer<T> {
 
         let success = if self.pointer != null_mut() {
             unsafe {
-                let result_pointer = result.as_mut_ptr()
-                    as *mut *mut I
-                    as *mut LPVOID;
+                let result_pointer = result.as_mut_ptr() as *mut *mut I as *mut LPVOID;
 
-                (*(self.pointer as *mut IUnknown)).QueryInterface(
-                    &I::uuidof(), result_pointer) == S_OK
+                (*(self.pointer as *mut IUnknown)).QueryInterface(&I::uuidof(), result_pointer)
+                    == S_OK
             }
         } else {
             false

@@ -66,11 +66,11 @@ impl Editor for PluginGui {
 
 pub use lib::JavascriptCallback;
 
-pub fn new_plugin_gui(
-    html_document: String, js_callback: JavascriptCallback) -> PluginGui
-{
+pub fn new_plugin_gui(html_document: String, js_callback: JavascriptCallback) -> PluginGui {
     #[cfg(windows)]
     {
-        PluginGui {gui: win32::new_plugin_gui(html_document, js_callback)}
+        PluginGui {
+            gui: win32::new_plugin_gui(html_document, js_callback),
+        }
     }
 }

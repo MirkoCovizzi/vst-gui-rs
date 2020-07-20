@@ -5,12 +5,12 @@ use std::os::raw::*;
 // Non-asterisk imports are required to eliminate ambiguity
 use winapi::shared::guiddef::*;
 use winapi::shared::minwindef::*;
-use winapi::shared::windef::*;
 use winapi::shared::windef::SIZE;
+use winapi::shared::windef::*;
 use winapi::shared::wtypes::*;
 use winapi::shared::wtypesbase::*;
 use winapi::um::oaidl::*;
-use winapi::um::objidl::{IMoniker, IPersist,  IPersistVtbl};
+use winapi::um::objidl::{IMoniker, IPersist, IPersistVtbl};
 use winapi::um::objidlbase::*;
 use winapi::um::unknwnbase::*;
 use winapi::um::winnt::*;
@@ -19,8 +19,7 @@ use winapi::um::winuser::*;
 #[link(name = "ole32")]
 extern "system" {
     pub fn OleInitialize(_: LPVOID) -> HRESULT;
-    pub fn OleSetContainedObject(
-        pUnknown: *mut IUnknown, fContained: BOOL) -> HRESULT;
+    pub fn OleSetContainedObject(pUnknown: *mut IUnknown, fContained: BOOL) -> HRESULT;
 }
 
 #[link(name = "shlwapi")]
@@ -38,7 +37,7 @@ pub type IHTMLWindow2 = IUnknown;
 
 pub const OLEIVERB_INPLACEACTIVATE: LONG = -5;
 
-RIDL!{
+RIDL! {
     #[uuid(0x00000112, 0x0000, 0x0000, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46)]
     interface IOleObject(IOleObjectVtbl) : IUnknown(IUnknownVtbl) {
         fn SetClientSite(pClientSite: *mut IOleClientSite,) -> HRESULT,
@@ -71,7 +70,7 @@ RIDL!{
     }
 }
 
-RIDL!{
+RIDL! {
     #[uuid(0x00000118, 0x0000, 0x0000, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46)]
     interface IOleClientSite(IOleClientSiteVtbl) : IUnknown(IUnknownVtbl) {
         fn SaveObject() -> HRESULT,
@@ -86,7 +85,7 @@ RIDL!{
     }
 }
 
-RIDL!{
+RIDL! {
     #[uuid(0x00000114, 0x0000, 0x0000, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46)]
     interface IOleWindow(IOleWindowVtbl) : IUnknown(IUnknownVtbl) {
         fn GetWindow(phwnd: *mut HWND,) -> HRESULT,
@@ -94,7 +93,7 @@ RIDL!{
     }
 }
 
-RIDL!{
+RIDL! {
     #[uuid(0x00000115, 0x0000, 0x0000, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46)]
     interface IOleInPlaceUIWindow(IOleInPlaceUIWindowVtbl) :
         IOleWindow(IOleWindowVtbl)
@@ -110,7 +109,7 @@ RIDL!{
     }
 }
 
-RIDL!{
+RIDL! {
     #[uuid(0x00000116, 0x0000, 0x0000, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46)]
     interface IOleInPlaceFrame(IOleInPlaceFrameVtbl) :
         IOleInPlaceUIWindow(IOleInPlaceUIWindowVtbl)
@@ -134,7 +133,7 @@ RIDL!{
     }
 }
 
-STRUCT!{
+STRUCT! {
     struct OLEINPLACEFRAMEINFO {
         cb: UINT,
         fMDIApp: BOOL,
@@ -144,7 +143,7 @@ STRUCT!{
     }
 }
 
-RIDL!{
+RIDL! {
     #[uuid(0x00000119, 0x0000, 0x0000, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46)]
     interface IOleInPlaceSite(IOleInPlaceSiteVtbl) : IOleWindow(IOleWindowVtbl) {
         fn CanInPlaceActivate() -> HRESULT,
@@ -165,7 +164,7 @@ RIDL!{
     }
 }
 
-RIDL!{
+RIDL! {
     #[uuid(0x00000113, 0x0000, 0x0000, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46)]
     interface IOleInPlaceObject(IOleInPlaceObjectVtbl) : IOleWindow(IOleWindowVtbl) {
         fn InPlaceDeactivate() -> HRESULT,
@@ -177,7 +176,7 @@ RIDL!{
     }
 }
 
-RIDL!{
+RIDL! {
     #[uuid(0xeab22ac1, 0x30c1, 0x11cf, 0xa7, 0xeb, 0x00, 0x00, 0xc0, 0x5b, 0xae, 0x0b)]
     interface IWebBrowser(IWebBrowserVtbl) : IDispatch(IDispatchVtbl) {
         fn Unused_GoBack() -> HRESULT,
@@ -213,7 +212,7 @@ RIDL!{
     }
 }
 
-RIDL!{
+RIDL! {
     #[uuid(0x0002df05, 0x0000, 0x0000, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46)]
     interface IWebBrowserApp(IWebBrowserAppVtbl) : IWebBrowser(IWebBrowserVtbl) {
         fn Unused_Quit() -> HRESULT,
@@ -239,7 +238,7 @@ RIDL!{
     }
 }
 
-RIDL!{
+RIDL! {
     #[uuid(0xd30c1661, 0xcdaf, 0x11d0, 0x8a, 0x3e, 0x00, 0xc0, 0x4f, 0xc9, 0xe2, 0x6e)]
     interface IWebBrowser2(IWebBrowser2Vtbl) : IWebBrowserApp(IWebBrowserAppVtbl) {
         fn Unused_Navigate2() -> HRESULT,
@@ -264,11 +263,11 @@ RIDL!{
     }
 }
 
-DEFINE_GUID!{
-    CLSID_WebBrowser,
-    0x8856f961, 0x340a, 0x11d0, 0xa9, 0x6b, 0x00, 0xc0, 0x4f, 0xd7, 0x05, 0xa2}
+DEFINE_GUID! {
+CLSID_WebBrowser,
+0x8856f961, 0x340a, 0x11d0, 0xa9, 0x6b, 0x00, 0xc0, 0x4f, 0xd7, 0x05, 0xa2}
 
-RIDL!{
+RIDL! {
     #[uuid(0x7fd52380, 0x4e07, 0x101b, 0xae, 0x2d, 0x08, 0x00, 0x2b, 0x2e, 0xc7, 0x13)]
     interface IPersistStreamInit(IPersistStreamInitVtbl) : IPersist(IPersistVtbl) {
         fn IsDirty() -> HRESULT,
@@ -279,7 +278,7 @@ RIDL!{
     }
 }
 
-STRUCT!{
+STRUCT! {
     struct DOCHOSTUIINFO {
         cbSize: c_ulong,
         dwFlags: DWORD,
@@ -289,7 +288,7 @@ STRUCT!{
     }
 }
 
-RIDL!{
+RIDL! {
     #[uuid(0xbd3f23c0, 0xd43e, 0x11cf, 0x89, 0x3b, 0x00, 0xaa, 0x00, 0xbd, 0xce, 0x1a)]
     interface IDocHostUIHandler(IDocHostUIHandlerVtbl) : IUnknown(IUnknownVtbl) {
         fn ShowContextMenu(
@@ -335,14 +334,14 @@ RIDL!{
     }
 }
 
-RIDL!{
+RIDL! {
     #[uuid(0x626fc520, 0xa41e, 0x11cf, 0xa7, 0x31, 0x00, 0xa0, 0xc9, 0x08, 0x26, 0x37)]
     interface IHTMLDocument(IHTMLDocumentVtbl) : IDispatch(IDispatchVtbl) {
         fn Unused_get_Script() -> HRESULT,
     }
 }
 
-RIDL!{
+RIDL! {
     #[uuid(0x332c4425, 0x26cb, 0x11d0, 0xb4, 0x83, 0x00, 0xc0, 0x4f, 0xd9, 0x01, 0x19)]
     interface IHTMLDocument2(IHTMLDocument2Vtbl) : IHTMLDocument(IHTMLDocumentVtbl) {
         fn Unused_get_all() -> HRESULT,
