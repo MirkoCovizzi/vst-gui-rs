@@ -7,7 +7,7 @@ license = "MIT"
 keywords = ["gui", "plugin", "vst", "vst2"]
 
 [dependencies]
-vst = "^0.0"
+vst = "0.2.0"
 
 [target.'cfg(windows)'.dependencies]
 memoffset = "0.2.1"
@@ -27,3 +27,14 @@ features = [
 [[example]]
 name = "synth"
 crate-type = ["cdylib"]
+
+[profile.release]
+opt-level = 3
+debug = false
+debug-assertions = false
+overflow-checks = false
+lto = false
+panic = 'unwind'
+incremental = false
+codegen-units = 16
+rpath = false

@@ -9,6 +9,8 @@ extern crate vst;
 use std::error::Error;
 use std::os::raw::c_void;
 
+use vst::editor::Editor;
+
 #[cfg(windows)]
 mod win32;
 
@@ -22,7 +24,7 @@ mod lib {
         fn size(&self) -> (i32, i32);
         fn position(&self) -> (i32, i32);
         fn close(&mut self);
-        fn open(&mut self, parent_handle: *mut c_void);
+        fn open(&mut self, parent_handle: *mut c_void) -> bool;
         fn is_open(&mut self) -> bool;
         fn execute(&self, javascript_code: &str) -> Result<(), Box<Error>>;
     }
@@ -40,7 +42,7 @@ impl PluginGui {
     }
 }
 
-impl vst::editor::Editor for PluginGui {
+impl Editor for PluginGui {
     fn size(&self) -> (i32, i32) {
         self.gui.size()
     }
@@ -53,7 +55,7 @@ impl vst::editor::Editor for PluginGui {
         self.gui.close()
     }
 
-    fn open(&mut self, parent_handle: *mut c_void) {
+    fn open(&mut self, parent_handle: *mut c_void) -> bool {
         self.gui.open(parent_handle)
     }
 

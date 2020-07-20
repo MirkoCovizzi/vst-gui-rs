@@ -447,7 +447,7 @@ impl PluginGui for Gui {
         self.window = None;
     }
 
-    fn open(&mut self, parent_handle: *mut c_void) {
+    fn open(&mut self, parent_handle: *mut c_void) -> bool {
         let window = Window::new(parent_handle as HWND);
 
         // TODO: display errors
@@ -457,6 +457,8 @@ impl PluginGui for Gui {
             self.js_callback.clone()
         ).ok();
         self.window = Some(window);
+
+        true
     }
 
     fn is_open(&mut self) -> bool {
